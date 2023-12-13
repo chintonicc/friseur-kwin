@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {useLocation} from 'react-router-dom';
 import {Button} from './Button';
 import {Link} from 'react-router-dom';
 import './Navbar.css';
@@ -6,6 +7,8 @@ import './Navbar.css';
 function Navbar() {
     const [click, setClick] = useState(false);
     const [button, setButton] = useState(true);
+    const location = useLocation();
+    const isTerminePage = location.pathname === '/termine';
 
     const handleClick = () => setClick(!click);
 
@@ -15,9 +18,17 @@ function Navbar() {
         window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
-    function scrollToDiv() {
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function scrollToDiv(id) {
+        if (isTerminePage) {
+            await sleep(500);
+        }
+        
         const navbarHeight = 80;  // Adjust this value to the height of your navbar
-        const targetDiv = document.getElementById('about-container');
+        const targetDiv = document.getElementById(id);
 
         if (targetDiv) {
             const divPosition = targetDiv.getBoundingClientRect().top + window.pageYOffset;
@@ -29,6 +40,10 @@ function Navbar() {
             console.error('Element with ID "targetDiv" not found.');
         }
     }
+
+    const handleButtonClick = () => {
+        window.location.href = '/termine';
+    };
 
 
     const showButton = () => {
@@ -54,15 +69,17 @@ function Navbar() {
                         closeMobileMenu();
                         scrollToTop();
                     }}>
-                        Friseur Kwin
-                        <i className='fab fa-typo3'/>
+                        Friseur Kwin{'\u00A0'}
+                        <i className="fa-solid fa-scissors fa-xs"></i>
                     </Link>
                     <div className='menu-icon' onClick={handleClick}>
                         <i className={click ? 'fas fa-times' : 'fas fa-bars'}/>
                     </div>
                     <ul className={click ? 'nav-menu active' : 'nav-menu'}>
                         <li className='nav-item'>
-                            <Link to='/' className='nav-links' onClick={() => {closeMobileMenu(); scrollToTop();
+                            <Link to='/' className='nav-links' onClick={() => {
+                                closeMobileMenu();
+                                scrollToTop();
                             }}>
                                 Home
                             </Link>
@@ -70,23 +87,26 @@ function Navbar() {
                         <li className='nav-item'>
                             <Link to='/' className='nav-links' onClick={() => {
                                 closeMobileMenu();
-                                scrollToDiv();
+                                scrollToDiv('about-container');
                             }}>
                                 Über uns
                             </Link>
                         </li>
                         <li className='nav-item'>
-                            <Link to='/' className='nav-links' onClick={closeMobileMenu}>
+                            <Link to='/' className='nav-links' onClick={() => {
+                                closeMobileMenu();
+                                scrollToDiv('price__list');
+                            }}>
                                 Preise
                             </Link>
                         </li>
                         <li>
-                            <Link to='/' className='nav-links-mobile' onClick={closeMobileMenu}>
+                            <Link to='/termine' className='nav-links-mobile' onClick={closeMobileMenu}>
                                 Termin buchen
                             </Link>
                         </li>
                     </ul>
-                    {button && <Button buttonStyle='btn--outline'>Termin buchen</Button>}
+                    {button && <Button buttonStyle='btn--outline' onClick={handleButtonClick}>Termin buchen</Button>}
                 </div>
             </nav>
         </>

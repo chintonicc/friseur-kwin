@@ -3,7 +3,8 @@ import '../App.css';
 import HeroSection from "./HeroSection";
 import Cards from "./Cards";
 import About from "./About";
-import Price from "./Price";
+import PriceList from "./PriceList";
+import Footer from "./Footer"
 
 function Home() {
     return (
@@ -11,7 +12,8 @@ function Home() {
             <HeroSection />
             <Cards />
             <About />
-            <Price />
+            <PriceList />
+            <Footer />
         </>
     )
 } export default Home;

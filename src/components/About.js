@@ -14,12 +14,6 @@ function About() {
                         Schnitt, jede Farbe und jeden Stil, den wir kreieren, ein.
                         <br/>
                         <br/>
-                        Unser engagiertes Team aus erfahrenen Friseurmeistern und talentierten Stylisten bleibt stets am
-                        Puls der Zeit, um Ihnen die neuesten Trends und Techniken aus der Welt der Haarkunst anzubieten.
-                        Gleichzeitig ehren wir klassische Stile und Techniken, die die zeitlose Eleganz unterstreichen,
-                        für die München bekannt ist.
-                        <br/>
-                        <br/>
                         Hier im FriseurKwin glauben wir, dass jeder Kunde einzigartig ist. Deshalb nehmen wir uns die
                         Zeit, Ihre individuellen Wünsche und Bedürfnisse zu verstehen, um einen Look zu kreieren, der
                         perfekt zu Ihren Geishctszügen passt.
