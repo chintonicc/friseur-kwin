@@ -24,7 +24,7 @@ function Navbar() {
 
     async function scrollToDiv(id) {
         if (isTerminePage) {
-            await sleep(500);
+            await sleep(750);
         }
         
         const navbarHeight = 80;  // Adjust this value to the height of your navbar

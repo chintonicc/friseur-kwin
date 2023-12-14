@@ -21,7 +21,7 @@ function Cards() {
           <ul className='cards__items'>
             <CardItem
               src='images/img-3.jpg'
-              text='Dauerwelle / Glättung'
+              text='Dauerwelle'
             />
             <CardItem
               src='images/img-4.jpg'

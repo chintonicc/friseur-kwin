@@ -5,14 +5,24 @@ function Footer() {
         visibility: 'hidden',
     };
 
-    const handleCopyClick = () => {
-    const textToCopy = document.getElementById('paragraphToCopy').innerText;
-    navigator.clipboard.writeText(textToCopy).then(() => {
-      setTimeout(() => {
-        document.getSelection().removeAllRanges(); // Clear the selection
-      }, 1000); // Clear the selection after 1 second
-    });
-  };
+    const handleCopyPhoneNumber = () => {
+        const phoneNumber = document.getElementById('phoneNumber');
+        copyToClipboard(phoneNumber.innerText);
+    };
+
+    const handleCopyEmail = () => {
+        const email = document.getElementById('email');
+        copyToClipboard(email.innerText);
+    };
+
+    const copyToClipboard = (text) => {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+    };
 
     return (
         <footer className='footer'>
@@ -43,12 +53,17 @@ function Footer() {
                 <div className='contact'>
                     <h3>Kontakt:</h3>
                     <div className="icon-wrapper">
-                        <i className="fa-solid fa-phone" id="paragraphToCopy" onClick={handleCopyClick}></i>
-                        <p>089 32362897</p>
+                        <i className="fa-solid fa-phone"
+                           id="paragraphToCopy"
+                           onClick={handleCopyPhoneNumber}
+                           title="kopieren"></i>
+                        <p id='phoneNumber'>089 32362897</p>
                     </div>
                     <div className="icon-wrapper">
-                        <i className="fa-regular fa-envelope"></i>
-                        <p>kevin.nguyen@tum.de</p>
+                        <i className="fa-regular fa-envelope"
+                           onClick={handleCopyEmail}
+                           title="kopieren"></i>
+                        <p id='email'>kevin.nguyen@tum.de</p>
                     </div>
                 </div>
             </div>
