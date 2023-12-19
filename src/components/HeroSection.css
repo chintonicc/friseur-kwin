@@ -44,6 +44,7 @@ video {
     width: 65%;
     margin-top: 90px;
     background-color: white;
+    align-items: center;
     box-shadow: 0 6px 20px rgba(56, 125, 255, 0.2);
     -webkit-filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
     filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
@@ -67,7 +68,7 @@ video {
     border-radius: 6px;
     border: 1px solid black;
     text-align: center;
-    cursor: default;
+    cursor: pointer;
 }
 
 
@@ -95,5 +96,36 @@ video {
 
     .btn {
         width: 100%;
+    }
+
+    .time-slot-wrapper {
+        width: 75%;
+        margin-top: 90px;
+        background-color: white;
+        box-shadow: 0 6px 20px rgba(56, 125, 255, 0.2);
+        align-items: center;
+        -webkit-filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
+        filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
+        border-radius: 8px;
+        overflow: hidden;
+        padding: 2rem;
+    }
+
+    .time-slot-container {
+        margin-top: 30px;
+        line-height: 2rem;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+    .time-slot-card {
+        width: 50px;
+        height: 30px;
+        margin: 8px;
+        border-radius: 6px;
+        border: 1px solid black;
+        text-align: center;
+        cursor: pointer;
     }
 }

@@ -95,7 +95,7 @@ function Navbar() {
                         <li className='nav-item'>
                             <Link to='/' className='nav-links' onClick={() => {
                                 closeMobileMenu();
-                                scrollToDiv('price__list');
+                                scrollToDiv('price__list')
                             }}>
                                 Preise
                             </Link>

@@ -1,10 +1,8 @@
 .price__list {
-    margin-top: 90px;
     display: flex;
     flex-flow: column;
     width: 100%;
     align-items: center;
-    border-radius: 10px;
     overflow: hidden;
     text-decoration: none;
     text-align: center;
@@ -12,7 +10,8 @@
 
 .price__list__container {
     width: 50%;
-    margin-top: 20px;
+    margin-top: 110px;
+    margin-bottom: 110px;
     background-color: white;
     box-shadow: 0 6px 20px rgba(56, 125, 255, 0.2);
     -webkit-filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
