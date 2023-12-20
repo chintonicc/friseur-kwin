@@ -16,6 +16,7 @@ function HeroSection() {
 
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
+    const [elementsVisible, setElementsVisible] = useState(true);
     const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
 
     const handleButtonClick = () => {
@@ -57,6 +58,7 @@ function HeroSection() {
 
     const handleTimeClick = (time) => {
         setSelectedTime(time);
+        setElementsVisible(false);
     };
 
     const maxSelectableDate = new Date();
@@ -79,31 +81,47 @@ function HeroSection() {
                 </>
             ) : (
                 <>
-                    <ReactCalendar
-                        minDate={new Date()}
-                        maxDate={maxSelectableDate}
-                        className='react-calendar p-2'
-                        view='month'
-                        onClickDay={handleDayClick}
-                    />
-                    {selectedDate && (
-                        <div className='time-slot-wrapper'>
-                            <h2>Termine für den {selectedDate.toLocaleDateString()}</h2>
-                            <div className="time-slot-container">
-                                {availableTimeSlots.map((slot) => (
-                                    <TimeSlotCard key={slot.toISOString()} time={slot}
-                                                  onClick={(time) => handleTimeClick(time)}/>
-                                ))}
-                            </div>
+                    {elementsVisible ? (
+                        <>
+                            <ReactCalendar
+                                minDate={new Date()}
+                                maxDate={maxSelectableDate}
+                                className='react-calendar p-2'
+                                view='month'
+                                onClickDay={handleDayClick}
+                            />
+                            {selectedDate && (
+                                <div className='time-slot-wrapper'>
+                                    <h2>Termine für den {selectedDate.toLocaleDateString()}</h2>
+                                    <div className="time-slot-container">
+                                        {availableTimeSlots.map((slot) => (
+                                            <TimeSlotCard key={slot.toISOString()} time={slot}
+                                                          onClick={(time) => handleTimeClick(time)}/>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </>
+                    ) : (
+                        <div className='form-wrapper'>
+
+                            <form className='input-form'>
+                                <h2>Termin für den {selectedDate.toLocaleDateString()}</h2>
+                                <h2 style={{ marginBottom: '20px' }}>um {selectedTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}</h2>
+                                <label id='name'>Name</label>
+                                <input type='text' name='name' style={{ marginBottom: '10px' }} required/>
+                                <label id='email'>E-Mail</label>
+                                <input type='email' name='email' style={{ marginBottom: '10px' }} required/>
+                                <label id='phone'>Telefonnummer</label>
+                                <input type='tel' name='phone' style={{ marginBottom: '10px' }} required/>
+                                <label id='message'>Nachricht</label>
+                                <textarea name='message' style={{ marginBottom: '10px' }} placeholder='(optional)' required/>
+                                <button className='input-btn'>
+                                    <b>TERMIN BUCHEN</b>
+                                </button>
+                            </form>
                         </div>
                     )}
-                    <div>
-                        Selected Time: {selectedTime ? selectedTime.toLocaleTimeString([], {
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    }) : 'None'}
-                    </div>
-
                 </>
             )}
         </div>
