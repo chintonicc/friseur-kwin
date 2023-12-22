@@ -104,7 +104,6 @@ function HeroSection() {
                         </>
                     ) : (
                         <div className='form-wrapper'>
-
                             <form className='input-form'>
                                 <h2>Termin für den {selectedDate.toLocaleDateString()}</h2>
                                 <h2 style={{ marginBottom: '20px' }}>um {selectedTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}</h2>
