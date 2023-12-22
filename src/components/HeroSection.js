@@ -13,14 +13,23 @@ function HeroSection() {
 
     // Check if the current pathname is "/termine"
     const isTerminePage = location.pathname === '/termine';
+    const isSuccessPage = location.pathname === '/success';
 
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
     const [elementsVisible, setElementsVisible] = useState(true);
     const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
 
-    const handleButtonClick = () => {
+    function redirectHomePage() {
+        window.location.href = '/';
+    }
+
+    const redirectTerminePage = () => {
         window.location.href = '/termine';
+    };
+
+    const redirectSuccessPage = () => {
+        window.location.href = '/success';
     };
 
     const handleDayClick = (date) => {
@@ -61,6 +70,11 @@ function HeroSection() {
         setElementsVisible(false);
     };
 
+    const handleFormSubmit = (e) => {
+        e.preventDefault(); // Prevent the default form submission behavior
+        redirectSuccessPage();     // Redirect using your custom function
+    };
+
     const maxSelectableDate = new Date();
     maxSelectableDate.setMonth(maxSelectableDate.getMonth() + 2);
     maxSelectableDate.setDate(0)
@@ -68,20 +82,20 @@ function HeroSection() {
     return (
         <div className='hero-container'>
             <video src='/videos/video-1.mp4' autoPlay loop muted/>
-            {!isTerminePage ? (
+            {!isTerminePage && !isSuccessPage ? (
                 <>
                     <h1>Seiten nicht frisch?</h1>
                     <p>Kein Problem!</p>
                     <div className="hero-btn">
                         <Button className='btn' buttonStyle='btn--primary' buttonSize='btn--large'
-                                onClick={handleButtonClick}>
+                                onClick={redirectTerminePage}>
                             <b>BUCHE JETZT DEINEN TERMIN</b>
                         </Button>
                     </div>
                 </>
             ) : (
-                <>
-                    {elementsVisible ? (
+                isTerminePage ? (
+                    elementsVisible ? (
                         <>
                             <ReactCalendar
                                 minDate={new Date()}
@@ -104,24 +118,35 @@ function HeroSection() {
                         </>
                     ) : (
                         <div className='form-wrapper'>
-                            <form className='input-form'>
+                            <form className='input-form' onSubmit={handleFormSubmit}>
                                 <h2>Termin für den {selectedDate.toLocaleDateString()}</h2>
-                                <h2 style={{ marginBottom: '20px' }}>um {selectedTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}</h2>
+                                <h2 style={{marginBottom: '20px'}}>um {selectedTime.toLocaleTimeString([], {
+                                    hour: '2-digit',
+                                    minute: '2-digit'
+                                })}</h2>
                                 <label id='name'>Name</label>
-                                <input type='text' name='name' style={{ marginBottom: '10px' }} required/>
+                                <input type='text' name='name' style={{marginBottom: '10px'}} required/>
                                 <label id='email'>E-Mail</label>
-                                <input type='email' name='email' style={{ marginBottom: '10px' }} required/>
+                                <input type='email' name='email' style={{marginBottom: '10px'}} required/>
                                 <label id='phone'>Telefonnummer</label>
-                                <input type='tel' name='phone' style={{ marginBottom: '10px' }} required/>
+                                <input type='tel' name='phone' style={{marginBottom: '10px'}} required/>
                                 <label id='message'>Nachricht</label>
-                                <textarea name='message' style={{ marginBottom: '10px' }} placeholder='(optional)' required/>
+                                <textarea name='message' style={{marginBottom: '10px'}} placeholder='(optional)'/>
                                 <button className='input-btn'>
                                     <b>TERMIN BUCHEN</b>
                                 </button>
                             </form>
                         </div>
-                    )}
-                </>
+                    )
+                ) : (
+                    <div className='form-wrapper'>
+                        <h2 style={{marginBottom: '10px'}}>Ihre Buchung war erfolgreich</h2>
+                        <p>Sie erhalten in Kürze eine Bestätigungs-Mail.</p>
+                        <button className='input-btn' onClick={redirectHomePage}>
+                            <b>ZURÜCK ZUR STARTSEITE</b>
+                        </button>
+                    </div>
+                )
             )}
         </div>
     );
