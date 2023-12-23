@@ -140,7 +140,7 @@ function HeroSection() {
                     )
                 ) : (
                     <div className='form-wrapper'>
-                        <h2 style={{marginBottom: '10px'}}>Ihre Buchung war erfolgreich</h2>
+                        <h2 style={{marginBottom: '10px'}}>Ihre Buchung war erfolgreich.</h2>
                         <p>Sie erhalten in Kürze eine Bestätigungs-Mail.</p>
                         <button className='input-btn' onClick={redirectHomePage}>
                             <b>ZURÜCK ZUR STARTSEITE</b>
