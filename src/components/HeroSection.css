@@ -42,6 +42,7 @@ video {
 
 .time-slot-wrapper {
     width: 65%;
+    max-width: 715px;
     margin-top: 90px;
     background-color: white;
     align-items: center;
