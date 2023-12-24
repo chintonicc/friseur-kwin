@@ -6,7 +6,6 @@ A hairdresser website, particularly for Kevin, the best hairdresser in the werld
 ---
 ## Requirements
 1. `Node.js`
-2. `npm`
 
 ---
 ## Installation
