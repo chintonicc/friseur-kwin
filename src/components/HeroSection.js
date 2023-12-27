@@ -72,7 +72,42 @@ function HeroSection() {
 
     const handleFormSubmit = (e) => {
         e.preventDefault(); // Prevent the default form submission behavior
-        redirectSuccessPage();     // Redirect using your custom function
+
+        
+
+        // Get form data
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData);
+
+        // Add the selected date and time to the data
+        data.date = selectedDate.toLocaleDateString();
+        data.time = selectedTime.toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+
+        // Send a POST request to the /appointments endpoint
+        fetch('http://localhost:5000/appointments', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // If the request was successful, redirect to the success page
+                console.log('Success:', data);
+                redirectSuccessPage();
+            } else {
+                // If there was an error, log it to the console
+                console.error('Error:', data.error);
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
     };
 
     const maxSelectableDate = new Date();
