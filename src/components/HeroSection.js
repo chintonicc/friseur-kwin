@@ -11,7 +11,7 @@ function HeroSection() {
 
     const location = useLocation();
 
-    // Check if the current pathname is "/termine"
+    // Check if the current pathname is "/termine" or "/success"
     const isTerminePage = location.pathname === '/termine';
     const isSuccessPage = location.pathname === '/success';
 
@@ -19,6 +19,8 @@ function HeroSection() {
     const [selectedTime, setSelectedTime] = useState(null);
     const [elementsVisible, setElementsVisible] = useState(true);
     const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
+
+    // redirect to pages
 
     function redirectHomePage() {
         window.location.href = '/';
@@ -32,7 +34,7 @@ function HeroSection() {
         window.location.href = '/success';
     };
 
-    const handleDayClick = (date) => {
+    const handleDayClick = async (date) => {
         // Set the selected date
         setSelectedDate(date);
 
@@ -54,9 +56,43 @@ function HeroSection() {
             const slots = [];
             let currentTime = new Date(startTime);
 
+            // get date in YYYY-MM-DD format
+            const year = date.getFullYear();
+            const month = ('0' + (date.getMonth() + 1)).slice(-2); 
+            const day = ('0' + date.getDate()).slice(-2);
+            const formattedDate = `${year}-${month}-${day}`;
+            let bookedAppointments = [];
+
+            try {
+                // send GET request to the /appointments endpoint
+                const response = await fetch(`http://localhost:5000/appointments/${formattedDate}`);
+                const appointments = await response.json();
+                
+                // get the booked appointments
+                bookedAppointments = appointments.data;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+
             while (currentTime <= endTime) {
-                slots.push(new Date(currentTime));
+                // get time string in HH:MM format
+                let hours = currentTime.getHours();
+                let minutes = currentTime.getMinutes();
+
+                // Pad the hours and minutes with leading zeros if necessary
+                hours = hours < 10 ? '0' + hours : hours;
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+
+                const currentTimeString = `${hours}:${minutes}`;
+                const bookedTimes = bookedAppointments.map(appointment => appointment.time);
+
+                // check if already booked
+                if (!bookedTimes.includes(currentTimeString)) {
+                    slots.push(new Date(currentTime));
+                }
+                
                 currentTime.setMinutes(currentTime.getMinutes() + 30);
+                
             }
 
             setAvailableTimeSlots(slots);
@@ -71,16 +107,14 @@ function HeroSection() {
     };
 
     const handleFormSubmit = (e) => {
-        e.preventDefault(); // Prevent the default form submission behavior
-
-        
+        e.preventDefault();
 
         // Get form data
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData);
 
         // Add the selected date and time to the data
-        data.date = selectedDate.toLocaleDateString();
+        data.date = selectedDate.toLocaleDateString('en-CA');
         data.time = selectedTime.toLocaleTimeString([], {
             hour: '2-digit',
             minute: '2-digit'
@@ -110,6 +144,7 @@ function HeroSection() {
         });
     };
 
+    // set max selectable date to 2 months from now
     const maxSelectableDate = new Date();
     maxSelectableDate.setMonth(maxSelectableDate.getMonth() + 2);
     maxSelectableDate.setDate(0)

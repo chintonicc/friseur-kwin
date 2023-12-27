@@ -1,27 +1,64 @@
+/**
+ * Navbar component for the Friseur Kwin website.
+ * Renders a navigation bar with links and a button.
+ * Handles click events and scrolling to different sections of the page.
+ *
+ * @component
+ * @example
+ * return (
+ *   <Navbar />
+ * )
+ */
 import React, {useState, useEffect} from 'react';
 import {useLocation} from 'react-router-dom';
 import {Button} from './Button';
 import {Link} from 'react-router-dom';
 import './Navbar.css';
 
+/**
+ * Functional component representing the Navbar.
+ *
+ * @returns {JSX.Element} The rendered Navbar component.
+ */
 function Navbar() {
     const [click, setClick] = useState(false);
     const [button, setButton] = useState(true);
     const location = useLocation();
     const isTerminePage = location.pathname === '/termine';
 
+    /**
+     * Toggles the click state between true and false.
+     */
     const handleClick = () => setClick(!click);
 
+    /**
+     * Closes the mobile menu by setting the click state to false.
+     */
     const closeMobileMenu = () => setClick(false);
 
+    /**
+     * Scrolls to the top of the page.
+     */
     function scrollToTop() {
         window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
+    /**
+     * Asynchronously sleeps for the specified number of milliseconds.
+     *
+     * @param {number} ms - The number of milliseconds to sleep.
+     * @returns {Promise} A promise that resolves after the specified time.
+     */
     function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
+    /**
+     * Scrolls to the specified div on the page.
+     * If the current page is the termine page, waits for a delay before scrolling.
+     *
+     * @param {string} id - The ID of the target div to scroll to.
+     */
     async function scrollToDiv(id) {
         if (isTerminePage) {
             await sleep(750);
@@ -41,11 +78,17 @@ function Navbar() {
         }
     }
 
+    /**
+     * Handles the button click event by redirecting to the termine page.
+     */
     const handleButtonClick = () => {
         window.location.href = '/termine';
     };
 
-
+    /**
+     * Determines whether to show the button based on the window width.
+     * If the window width is less than or equal to 960, hides the button.
+     */
     const showButton = () => {
         if (window.innerWidth <= 960) {
             setButton(false);

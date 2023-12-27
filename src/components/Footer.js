@@ -1,20 +1,35 @@
+/**
+ * Footer component for displaying contact information and opening hours.
+ * @returns {JSX.Element} The rendered Footer component.
+ */
 import './Footer.css'
 
 function Footer() {
+    // Define a style object for hiding elements
     const invisible = {
         visibility: 'hidden',
     };
 
+    /**
+     * Copies the phone number to the clipboard.
+     */
     const handleCopyPhoneNumber = () => {
         const phoneNumber = document.getElementById('phoneNumber');
         copyToClipboard(phoneNumber.innerText);
     };
 
+    /**
+     * Copies the email address to the clipboard.
+     */
     const handleCopyEmail = () => {
         const email = document.getElementById('email');
         copyToClipboard(email.innerText);
     };
 
+    /**
+     * Copies the given text to the clipboard.
+     * @param {string} text - The text to be copied.
+     */
     const copyToClipboard = (text) => {
         const textarea = document.createElement('textarea');
         textarea.value = text;
